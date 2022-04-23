@@ -5,4 +5,4 @@ STM32*/
 .cproject
 .mproject
 .mxproject
-.project
+.gitignore

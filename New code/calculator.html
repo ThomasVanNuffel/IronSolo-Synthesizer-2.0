@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./calculator.css">
+    <title>Document</title>
+
+    <script>
+
+        function Check()
+        {
+            var text1 = "hey";
+
+            var Number = 4;
+
+            var ele = document.getElementsByName('potknob');
+              
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                text = ele[i].value;
+                console.log(text);
+            }
+
+            if(text == 1)    // Potentiometer
+            {
+                document.getElementById("Res7").innerHTML = 1;
+
+                document.getElementById("Res7").classList.remove("name");
+                document.getElementById("Res6").classList.remove("Value");
+                document.getElementById("Res5").classList.remove("Which");
+                document.getElementById("Res4").classList.remove("Which");
+                document.getElementById("Res3").classList.remove("Which");
+                document.getElementById("Res2").classList.remove("Which");
+                document.getElementById("Res1").classList.remove("Which");
+                document.getElementById("Res0").classList.remove("Which");
+
+                document.getElementById("Res7").classList.add("name");
+                document.getElementById("Res6").classList.add("Value");
+                document.getElementById("Res5").classList.add("Value");
+                document.getElementById("Res4").classList.add("Value");
+                document.getElementById("Res3").classList.add("Value");
+                document.getElementById("Res3").classList.add("Value");
+                document.getElementById("Res2").classList.add("Value");
+                document.getElementById("Res1").classList.add("Which");
+                document.getElementById("Res0").classList.add("Which");
+
+                if(document.getElementById("whichone").value > 4)
+                {
+                    alert("Helaba, er zijn maar 4 potmeters, dus " + document.getElementById("whichone").value + " is te veel");
+                }
+
+                Number = document.getElementById("whichone").value;
+
+                if(Number == 4)
+                {
+                    document.getElementById("Res1").innerHTML = 1;
+                    document.getElementById("Res0").innerHTML = 1;
+                }
+
+                if(Number == 3)
+                {
+                    document.getElementById("Res1").innerHTML = 1;
+                    document.getElementById("Res0").innerHTML = 0;
+                }
+
+                if(Number == 2)
+                {
+                    document.getElementById("Res1").innerHTML = 0;
+                    document.getElementById("Res0").innerHTML = 1;
+                }
+
+                if(Number == 1)
+                {
+                    document.getElementById("Res1").innerHTML = 0;
+                    document.getElementById("Res0").innerHTML = 0;
+                }
+                
+
+
+                if(document.getElementById("potentiometer").value - 16 >= 0)
+                {
+                    document.getElementById("Res6").innerHTML = 1;
+                    Number = document.getElementById("potentiometer").value - 16;
+                }
+                else
+                {
+                    document.getElementById("Res6").innerHTML = 0;
+                    Number = document.getElementById("potentiometer").value;
+                }
+
+                if(Number - 8 >= 0)
+                {
+                    document.getElementById("Res5").innerHTML = 1;
+                    Number = Number- 8;
+                }
+                else
+                {
+                    document.getElementById("Res5").innerHTML = 0;
+                }
+
+
+                if(Number - 4 >= 0)
+                {
+                    document.getElementById("Res4").innerHTML = 1;
+                    Number = Number- 4;
+                }
+                else
+                {
+                    document.getElementById("Res4").innerHTML = 0;
+                }
+
+
+                if(Number - 2 >= 0)
+                {
+                    document.getElementById("Res3").innerHTML = 1;
+                    Number = Number - 2; 
+                }
+                else
+                {
+                    document.getElementById("Res3").innerHTML = 0;                       
+                }
+
+
+                if(Number - 1 >= 0)
+                    {
+                        document.getElementById("Res2").innerHTML = 1;
+                    }
+                    else
+                    {
+                        document.getElementById("Res2").innerHTML = 0;
+                        
+                    }
+                
+            }
+            if(text == 0)   // Knob
+            {
+                document.getElementById("Res7").innerHTML = 0;
+
+                document.getElementById("Res6").classList.remove("Value");
+                document.getElementById("Res5").classList.remove("Value");
+                document.getElementById("Res4").classList.remove("Value");
+                document.getElementById("Res3").classList.remove("Value");
+                document.getElementById("Res3").classList.remove("Value");
+                document.getElementById("Res2").classList.remove("Value");
+                document.getElementById("Res1").classList.remove("Which");
+                document.getElementById("Res0").classList.remove("Which");
+
+                document.getElementById("Res7").classList.add("name");
+                document.getElementById("Res6").classList.add("Value");
+                document.getElementById("Res5").classList.add("Which");
+                document.getElementById("Res4").classList.add("Which");
+                document.getElementById("Res3").classList.add("Which");
+                document.getElementById("Res2").classList.add("Which");
+                document.getElementById("Res1").classList.add("Which");
+                document.getElementById("Res0").classList.add("Which");
+
+                if(document.getElementById("pressed").checked == true)
+                {
+                    document.getElementById("Res6").innerHTML = 1;
+                }
+
+                if(document.getElementById("pressed").checked == false)
+                {
+                    document.getElementById("Res6").innerHTML = 0;
+                }
+
+
+                if(document.getElementById("whichone").value - 16 >= 0)
+                {
+                    document.getElementById("Res5").innerHTML = 1;
+                    Number = document.getElementById("whichone").value - 16;
+                }
+                else
+                {
+                    document.getElementById("Res5").innerHTML = 0;
+                    Number = document.getElementById("whichone").value;
+                }
+
+                if(Number - 8 >= 0)
+                {
+                    document.getElementById("Res4").innerHTML = 1;
+                    Number = Number- 8;
+                }
+                else
+                {
+                    document.getElementById("Res3").innerHTML = 0;
+                }
+
+
+                if(Number - 4 >= 0)
+                {
+                    document.getElementById("Res2").innerHTML = 1;
+                    Number = Number- 4;
+                }
+                else
+                {
+                    document.getElementById("Res2").innerHTML = 0;
+                }
+
+
+                if(Number - 2 >= 0)
+                {
+                    document.getElementById("Res1").innerHTML = 1;
+                    Number = Number - 2; 
+                }
+                else
+                {
+                    document.getElementById("Res1").innerHTML = 0;                       
+                }
+
+
+                if(Number - 1 >= 0)
+                    {
+                        document.getElementById("Res0").innerHTML = 1;
+                    }
+                    else
+                    {
+                        document.getElementById("Res0").innerHTML = 0;
+                        
+                    }
+
+            }
+
+            
+            event.preventDefault();
+
+            var copyText = document.getElementById("Res7").innerHTML
+                            + document.getElementById("Res6").innerHTML
+                            + document.getElementById("Res5").innerHTML
+                            + document.getElementById("Res4").innerHTML
+                            + document.getElementById("Res3").innerHTML
+                            + document.getElementById("Res2").innerHTML
+                            + document.getElementById("Res1").innerHTML
+                            + document.getElementById("Res0").innerHTML;
+
+                            
+            navigator.clipboard.writeText(copyText);
+
+            console.log(copyText);
+        }
+
+
+    </script>
+</head>
+<body>
+    <h1>Here you can calculate which command should be sent to the I/O Expander</h1>
+
+    <div>
+        <table>
+            <tr>
+                <th>D7</th>
+                <th>D6</th>
+                <th>D5</th>
+                <th>D4</th>
+                <th>D3</th>
+                <th>D2</th>
+                <th>D1</th>
+                <th>D0</th>
+            </tr>
+            <tr>
+                <td class="name">potentiometer</td>
+                <td class="Value">value</td>
+                <td class="Value">value</td>
+                <td class="Value">value</td>
+                <td class="Value">value</td>
+                <td class="Value">value</td>
+                <td class="Which">Which one</td>
+                <td class="Which">Which one</td>
+            </tr>
+
+            <tr>
+                <td class="name">Knob</td>
+                <td class="Value">Pressed ?</td>
+                <td class="Which">Which one</td>
+                <td class="Which">Which one</td>
+                <td class="Which">Which one</td>
+                <td class="Which">Which one</td>
+                <td class="Which">Which one</td>
+                <td class="Which">Which one</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <div id="maindiv">
+        <form action="" onsubmit="Check()" id="Formke">
+            <div class="inline">
+                <div>
+                    <label>potentiometer</label>
+                    <input type="radio" name="potknob" value="1" id="1" checked>
+                </div>
+                <div>
+                    <label>knob</label>
+                    <input type="radio" name="potknob" value="0" id="2">
+                </div>
+            </div>
+
+            <div class="inline knop">
+
+                <div class="knob">
+                    <label>Which: </label>
+                    <input type="number" name="whichone" id="whichone" max="49" min="1" value="1">
+                    <input type="checkbox" name="pressed" id="pressed">
+                </div>
+
+            </div>
+
+            <div class="inline value">
+                <label>Value: </label>
+                <input type="number" name="potteke" id="potentiometer" max="31" min="0">
+            </div>
+
+            <div class="inline value">
+                <button type="submit" value="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+    <div>
+        <h1>Result</h1>
+        <div id="Result">
+            <table>
+                <tr>
+                    <th>D7</th>
+                    <th>D6</th>
+                    <th>D5</th>
+                    <th>D4</th>
+                    <th>D3</th>
+                    <th>D2</th>
+                    <th>D1</th>
+                    <th>D0</th>
+                </tr>
+                <tr>
+                    <td id="Res7"></td>
+                    <td id="Res6"></td>
+                    <td id="Res5"></td>
+                    <td id="Res4"></td>
+                    <td id="Res3"></td>
+                    <td id="Res2"></td>
+                    <td id="Res1"></td>
+                    <td id="Res0"></td>
+                </tr>    
+            </table>
+        </div>
+    </div>
+</body>
+</html>
