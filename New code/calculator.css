@@ -1,0 +1,87 @@
+body
+{
+    color: white;
+    text-align: center;
+    background-image: url("./c.jpg");
+    background-size: 100% 120%;
+}
+
+#maindiv
+{
+    display: flex;
+    margin-left: 20%;
+}
+
+.inline
+{
+    border: 2px double black;
+    display: inline-block;
+    line-height: 50px;
+    text-align: center;
+    width: 200px;
+}
+
+.knop
+{
+    height: 100px;
+    width: 200px;
+    position: relative;
+    top: -25px;
+    line-height: 100px;
+    text-align: center;
+}
+
+.pot
+{
+    height: 50px;
+    width: 200px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.value
+{
+    height: 100px;
+    width: 200px;
+    position: relative;
+    top: -25px;
+    line-height: 100px;
+    text-align: center;
+}
+
+td
+{
+    width: 150px;
+    border: 1px blue solid;
+    height: 40px;
+    text-align: center;
+    color: black;
+}
+
+th
+{
+    height: 50px;
+    border: 3px solid white;
+    background-color: gray;
+}
+
+table
+{
+    border: 4px black double;
+    margin-left: 9%;
+}
+
+.Which
+{
+    background-color: aqua;
+}
+
+.Value
+{
+    background-color: lightgreen;
+}
+
+.name
+{
+    background-color: lightcoral;
+}
