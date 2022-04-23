@@ -1,0 +1,9 @@
+Debug/
+.settings/
+CMSIS/
+STM32*/
+.cproject
+.mproject
+.mxproject
+.project
+.md
