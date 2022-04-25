@@ -32,15 +32,29 @@
 ;   Potentiometer = 1:
 ;       Which = Number of potmeter starting from left
 ;       Value = value of potmeter
+;
+;
+;
+;   Error messages to STM
+;
+;   #00h = I'm dead
+;
+;   #01111111b (note 63: on); Waiting for new input
+;   #00111111b (note 63: off); SendBuffer full
 
 
 ;   Begin of the program
      org 0000h                                  ; Start address in memory
-     mov sp,#7fh                                ; Initialize stack pointer (needs to be outside any function)     
+     mov sp,#7fh                                ; Initialize stack pointer (needs to be outside any function)
+
+     org 000bh                                  ; Vector address of timer 0 interrupt
+     lcall SendNote                             ; Check note
+     reti
 
 
 ;   Initialization components
 inits:
+        lcall inittimer0
         lcall initports                         ; Set ports to input/output + alt functions
         lcall aliases                           ; Set up all variables
         lcall initval                           ; Assign start value to them
@@ -75,11 +89,13 @@ main:
                 knob1on:
                     setb n1                         ; Set bit in register
                     mov P3_data, #01000001b         ; Send note on to the I/O
+                    lcall BufferNote
                     ljmp note2
 
                 knob1off:
                     clr n1                          ; Clear bit in register
                     mov P3_data, #00000001b         ; Send note off to the I/O
+                    lcall BufferNote
 
         note2:
             mov a, regcomp
@@ -97,12 +113,14 @@ main:
 
                 knob1on:
                     setb n2                         ; Set bit in register
-                    mov P3_data, #01000010b         ; Send note on to the I/O
+                    mov Newdata, #01000010b               ; Send note on to the I/O
+                    lcall BufferNote
                     ljmp main
 
                 knob1off:
                     clr n2                          ; Clear bit in register
                     mov P3_data, #00000010b         ; Send note on to the I/O
+                    lcall BufferNote
 
 ljmp main
 

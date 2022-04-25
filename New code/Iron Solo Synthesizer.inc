@@ -170,8 +170,13 @@ aliases:
         pot9           data     41h
         pot10          data     42h
 
-; Heelleeeppp
-        Hulp            data    4eh                     ; Help register
+; Data registers to send to STM
+        NewData        data     4ah
+        SendData1      data     4bh
+        SendData2      data     4ch
+        SendData3      data     4dh
+        SendData4      data     4eh
+        SendData5      data     4fh
 
 
 ; From 50h on the storage is used by the multiplication functions !!!
@@ -186,8 +191,8 @@ reg0                    data   20h                      ;Register 1
         n4              bit    03h
         n5              bit    04h
         n6              bit    05h
-        semiplus        bit    06h                      ;Knob to +1 semitones
-        bscan1          bit    07h
+        alreadysent     bit    06h                      ; Bit for knowing that you already sent the sleep command #01111111b
+        BufferSent      bit    07h
 
 reg1                    data   21h                      ;Register 2
         n7              bit    08h
@@ -368,6 +373,121 @@ initval:
         mov p5_data, #00h
 
         ret
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;
+;
+;
+;
+;
+;
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+inittimer0:
+        mov tl0, #00011111b             ; Set prescaler to the max      (/32)
+        mov tmod, #00h                  ; Timer 0 in 13-bit mode, software enable controlled    (8Mhz / 2^13 = 976,6Hz = 1,02ms)
+        mov ien0, #00000010b            ; Enable the interrupt
+        ret
+
+Enabletimer0:
+        mov a, tcon
+        cnje a, #0, teruug              ; Check if the timer isn't already on
+        orl tcon, #00010000b            ; if not, Start the timer
+        ret
+
+Disabletimer0:
+        mov a, tcon
+        cnje a, #0, Disabletimer01      ; Check if the timer isn't already on
+        ret                             ; if on, return
+Disabletimer01:                         ; else
+        anl tcon, #11101111b            ; Stop the timer
+        ret
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;
+;
+;
+;
+;
+;
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+BufferNote:
+        mov a, SendData1
+        cnje a, #0, Next1              ; Check if the first note is busy
+        mov SendData1, NewData          ; else put the new data in here
+        lcall Enabletimer0              ; If this is the first new note in the buffer, enable the timer
+        clr BufferSent
+        ret
+
+Next1:
+        mov a, SendData2
+        cnje a, #0, Next2              ; Check if the second note is busy
+        mov SendData2, NewData          ; else put the new data in here
+        clr BufferSent
+        ret
+
+Next2:
+        mov a, SendData3
+        cnje a, #0, Next3              ; Check if the third note is busy
+        mov SendData3, NewData          ; else put the new data in here
+        clr BufferSent
+        ret
+
+Next3:
+        mov a, SendData4
+        cnje a, #0, Next4              ; Check if the fourth note is busy
+        mov SendData4, NewData          ; else put the new data in here
+        clr BufferSent
+        ret
+
+Next4:
+        mov a, SendData5
+        cnje a, #0, BufferError         ; Check if the fifth note is busy
+        mov SendData5, NewData          ; else put the new data in here
+        clr BufferSent
+        ret
+
+BufferError:
+        jb BufferSent, teruug
+        mov p3_data, #00111111b          ; Event: you are too fast, data lost
+        setb BufferSent
+
+teruug:
+        ret
+
+
+SendNote:
+        mov a, SendData1
+        cjne a, #00, SendNote1          ; Send note 1 if not zero
+
+        ; If all buffers are empty, you come here
+        jb alreadysent, terug
+        mov p3_data, #01111111b         ; Event: I'm waiting for new data
+        lcall Disabletimer0             ; Stop timer from running
+        setb alreadysent
+terug:
+        reti
+
+SendNote1:
+        clr alreadysent                 ; Clear the bit because were busy again
+        mov p3_data, SendData1          ; Set the data on the port
+        mov SendData1, SendData2
+        mov SendData2, SendData3        ; Shift all other registers one up
+        mov SendData3, SendData4
+        mov SendData4, SendData5
+        mov SendData5, #00h             ; Clear the last one (since this is now in 4)
+        reti                            ; Return to main program
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
